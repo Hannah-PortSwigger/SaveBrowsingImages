@@ -28,18 +28,27 @@ class BurpExtender(IBurpExtender, IProxyListener, IHttpListener, IResponseInfo):
         if (messageIsRequest == False):
             response = messageInfo.getResponse()
             responseInfo = self._helpers.analyzeResponse(response)
+
             # Find out if image
             inferredMime = responseInfo.getInferredMimeType()
             statedMime = responseInfo.getStatedMimeType()
             # Build list to compare against
             imageMimeTypes = ["JPEG", "PNG"]
+
+            # Get response body
+            bodyOffset = responseInfo.getBodyOffset()
+            self._stdout.println(bodyOffset)
+            # Build image request body
+            imgData = response[bodyOffset:]
+            self._stdout.println(imgData)
+
             if (statedMime in imageMimeTypes) or (inferredMime in imageMimeTypes):
                 # Build file path
-                filePathBase = "/PLEASE/REPLACE/ME/"
+                filePathBase = "/Users/hannah.law/Documents/Extensions/img/"
                 fileName = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
                 fileExtension = "." + inferredMime.lower()
                 # Write to file
                 f = open(filePathBase + fileName + fileExtension, "wb")
-                f.write(response)
+                f.write(imgData)
                 f.close()
         return
