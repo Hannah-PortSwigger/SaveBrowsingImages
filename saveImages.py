@@ -44,7 +44,7 @@ class BurpExtender(IBurpExtender, IProxyListener, IHttpListener, IResponseInfo):
 
             if (statedMime in imageMimeTypes) or (inferredMime in imageMimeTypes):
                 # Build file path
-                filePathBase = "/Users/hannah.law/Documents/Extensions/img/"
+                filePathBase = "/PLEASE/REPLACE/ME/"
                 fileName = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
                 fileExtension = "." + inferredMime.lower()
                 # Write to file
